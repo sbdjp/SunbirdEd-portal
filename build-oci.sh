@@ -48,7 +48,7 @@ build_client(){
     nvm use 12.16.1
     cd client
     echo "starting client yarn install"
-    yarn install --check-files
+    yarn install --no-progress --check-files
     # temporary remove production to fix dependency problem
     # yarn install --no-progress --production=true
     echo "completed client yarn install"
@@ -72,17 +72,17 @@ build_server(){
     cd app_dist
     nvm use 12.16.1
     echo "starting server yarn install"
-    yarn install --check-files
+    yarn install --no-progress --check-files
 #    temporary remove --production=true to avoid missing dependency
 #    yarn install --no-progress --production=true
     echo "completed server yarn install"
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
 
-build_client  # run client build in background
+build_client & # run client build in background
 if [ $buildDockerImage == true ]
 then
-   build_server  # run client build in background
+   build_server & # run client build in background
 fi
 
 ## wait for both build to complete
@@ -94,7 +94,7 @@ echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] secon
 if [ $buildDockerImage == true ]
 then
 cd app_dist
-# the following line breaks the compare-versions dependency 
+# the following line breaks the compare-versions dependency
 # sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
 docker build --no-cache --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
