@@ -20,7 +20,7 @@ then
 fi
 
 commit_hash=$(git rev-parse --short HEAD)
-nvm install 12.16.1 # same is used in client and server
+nvm install 12.20.0 # same is used in client and server
 
 cd src/app
 mkdir -p app_dist/ # this folder should be created prior server and client build
@@ -45,7 +45,7 @@ build_client_cdn(){
 # function to run client build
 build_client(){
     echo "Building client in background"
-    nvm use 12.16.1
+    nvm use 12.20.0
     cd client
     echo "starting client yarn install"
     yarn install --no-progress --check-files
@@ -94,6 +94,11 @@ echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] secon
 if [ $buildDockerImage == true ]
 then
 cd app_dist
+
+echo "verify package depnedency"
+yarn install --check-files
+echo "finish yarn check files"
+
 # the following line breaks the compare-versions dependency
 # sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
