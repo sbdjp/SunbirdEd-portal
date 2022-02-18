@@ -86,7 +86,7 @@ then
 fi
 
 ## wait for both build to complete
-# wait
+wait
 
 BUILD_ENDTIME=$(date +%s)
 echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] seconds to complete."
