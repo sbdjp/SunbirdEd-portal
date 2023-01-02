@@ -2,7 +2,7 @@
 STARTTIME=$(date +%s)
 NODE_VERSION=14.19.0
 echo "Starting portal build from build.sh"
-set -euo pipefail	
+set -euo pipefail
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -53,7 +53,7 @@ build_client(){
     echo "completed client yarn install"
     if [ $buildDockerImage == true ]
     then
-    build_client_docker & # run client local build in background 
+    build_client_docker & # run client local build in background
     fi
     if [ $buildCdnAssests == true ]
     then
@@ -76,14 +76,14 @@ build_server(){
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
 
-build_client & # run client build in background 
+build_client & # run client build in background
 if [ $buildDockerImage == true ]
 then
    build_server & # run client build in background
 fi
 
 ## wait for both build to complete
-wait 
+wait
 
 BUILD_ENDTIME=$(date +%s)
 echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] seconds to complete."
@@ -91,6 +91,8 @@ echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] secon
 if [ $buildDockerImage == true ]
 then
 cd app_dist
+# replace the client cloud services bundles with OCI specific
+cp ../../../../../../OCI-Customiaztion/NodeJS-Client-Cloud-Service/dist/bundle.js node_modules/client-cloud-services/dist/
 sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
 docker build --no-cache --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
