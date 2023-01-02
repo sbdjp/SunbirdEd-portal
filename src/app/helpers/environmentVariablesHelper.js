@@ -139,7 +139,7 @@ let envVariables = {
   SUNBIRD_PUBLIC_STORAGE_ACCOUNT_NAME: env.sunbird_azure_storage_account_name,
   PORTAL_CASSANDRA_CONSISTENCY_LEVEL: env.sunbird_cassandra_consistency_level || 'one',
   PORTAL_CASSANDRA_REPLICATION_STRATEGY: env.sunbird_cassandra_replication_strategy || '{"class":"SimpleStrategy","replication_factor":1}',
-  
+
   // ############# CSP Configuration #############
   // Common key for Uploading Desktop Crash logs
   desktop_azure_crash_container_name: env.cloud_storage_desktopCrash_bucketname || 'desktopappcrashlogs',
@@ -166,6 +166,14 @@ let envVariables = {
   sunbird_gcloud_projectId: env.cloud_private_storage_project || '',
   sunbird_gcloud_reports: env.cloud_storage_privatereports_bucketname || 'reports',
   sunbird_gcloud_labels: env.cloud_storage_resourceBundle_bucketname || 'label',
+
+  // OCI - Oracle Cloud Infrastructure
+  sunbird_oci_access_key: env.cloud_private_storage_accountname || '',
+  sunbird_oci_secret_key: env.cloud_private_storage_secret || '',
+  sunbird_oci_region: env.cloud_private_storage_region || '',
+  sunbird_oci_reports: env.cloud_storage_privatereports_bucketname || 'reports',
+  sunbird_oci_labels: env.cloud_storage_resourceBundle_bucketname || 'label',
+  sunbird_oci_endpoint: env.cloud_private_storage_endpoint || '',
 
   // deprecated - Folder structure changed
   // sunbird_gcloud_bucket_name: env.sunbird_gcloud_bucket_name || 'sunbirded',

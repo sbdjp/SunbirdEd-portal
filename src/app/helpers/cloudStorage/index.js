@@ -58,10 +58,11 @@ switch (cloudProvider) {
     break;
   case 'oci':
     let ociConfig = {
-      identity: envHelper.sunbird_oci_client_email,
-      credential: envHelper.sunbird_oci_private_key,
+      identity: envHelper.sunbird_oci_access_key,
+      credential: envHelper.sunbird_oci_secret_key,
       containerName: envHelper.sunbird_oci_bucket_name,
       endpoint: envHelper.sunbird_oci_endpoint,
+      region: envHelper.sunbird_oci_region,
       reportsContainer: envHelper.sunbird_oci_reports,
       labelsContainer: envHelper.sunbird_oci_labels
     };
