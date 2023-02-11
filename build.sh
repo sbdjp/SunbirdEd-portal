@@ -93,7 +93,7 @@ then
 cd app_dist
 # replace the client cloud services bundles with OCI specific
 pwd
-cp "../../../../build-local/NodeJS-Client-Cloud-Service/dist/bundle.js" node_modules/client-cloud-services/dist/
+cp "../../../../../build-local/NodeJS-Client-Cloud-Service/dist/bundle.js" node_modules/client-cloud-services/dist/
 sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
 docker build --no-cache --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
