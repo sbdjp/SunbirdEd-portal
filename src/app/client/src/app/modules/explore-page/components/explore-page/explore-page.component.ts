@@ -376,7 +376,10 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
         //this.cacheService.set('searchFilters', filters, { expires: Date.now() + _cacheTimeout });
         this.showLoader = true;
         this.selectedFilters = pick(filters, _.get(currentPageData , 'metaData.filters'));
-        if (this.selectedFilters && this.selectedFilters['board'] && this.selectedFilters['board'][0] === 'CBSE/NCERT') {
+        if(this.channelId == "0125196274181898243") {
+            this.selectedFilters['board'][0] = null;
+        }
+        else (this.selectedFilters && this.selectedFilters['board'] && this.selectedFilters['board'][0] === 'CBSE/NCERT') {
             this.selectedFilters['board'][0] = 'CBSE';
         }
         if (has(filters, 'audience') || (localStorage.getItem('userType') && currentPageData.contentType !== 'all')) {
@@ -467,6 +470,7 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
                     if (this.userService.loggedIn) {
                         option.filters['visibility'] = option.filters['channel'] = [];
                     }
+                    console.log("Option filters", option);
                     return this.searchService.contentSearch(option)
                         .pipe(
                             map((response) => {
