@@ -379,7 +379,7 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
         if(this.channelId == "0125196274181898243") {
             this.selectedFilters['board'][0] = null;
         }
-        else (this.selectedFilters && this.selectedFilters['board'] && this.selectedFilters['board'][0] === 'CBSE/NCERT') {
+        else if (this.selectedFilters && this.selectedFilters['board'] && this.selectedFilters['board'][0] === 'CBSE/NCERT') {
             this.selectedFilters['board'][0] = 'CBSE';
         }
         if (has(filters, 'audience') || (localStorage.getItem('userType') && currentPageData.contentType !== 'all')) {
