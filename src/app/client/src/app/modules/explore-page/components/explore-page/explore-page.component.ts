@@ -227,6 +227,7 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
                         this.isFilterEnabled = _.get(currentPage, 'filter.isEnabled');
                     }
                     if ((_.get(currentPage, 'filter') && !_.get(currentPage, 'filter.isEnabled'))) {
+                        console.log("fetchContents call in ngOnInit - currentPage=", currentPage);
                         this.fetchContents$.next(currentPage);
                     }
             }),
@@ -391,6 +392,8 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.utilService.isDesktopApp) {
             this.setDesktopFilters(false);
         }
+        console.log("fetchContents call in getFilters- this.channelId = ", this.channelId);
+        console.log("fetchContents call in getFilters-currentPageData = ", currentPageData);
         this.fetchContents$.next(currentPageData);
     }
 
@@ -470,7 +473,11 @@ export class ExplorePageComponent implements OnInit, OnDestroy, AfterViewInit {
                     if (this.userService.loggedIn) {
                         option.filters['visibility'] = option.filters['channel'] = [];
                     }
-                    console.log("Option filters", option);
+                    if(this.channelId == "0125196274181898243") {
+                        option.filters['se_boards'] = [];
+                    }
+                    console.log("fetchContents call - this.channelId = ", this.channelId);
+                    console.log("fetchContents call - option = ", option);
                     return this.searchService.contentSearch(option)
                         .pipe(
                             map((response) => {
