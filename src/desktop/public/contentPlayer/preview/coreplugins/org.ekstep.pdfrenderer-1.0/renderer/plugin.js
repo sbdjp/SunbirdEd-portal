@@ -96,7 +96,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 path = data.streamingUrl;
                 context.optionalData = { "streamingUrl": path };
         } else {
-            path = data.artifactUrl + "?" + new Date().getSeconds();
+            // path = data.artifactUrl + "?" + new Date().getSeconds();
+            path = data.artifactUrl;
             context.optionalData = { "artifactUrl": path };
         }
         
