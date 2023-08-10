@@ -76,7 +76,9 @@ export class ContentTypeComponent implements OnInit, OnDestroy {
   }
 
   showContentType(data) {
+    console.log(this.router.url);
     this.generateTelemetry(data.contentType);
+    console.log(this.userService);
     let userPreference;
     let params;
     try {
@@ -104,7 +106,7 @@ export class ContentTypeComponent implements OnInit, OnDestroy {
         { queryParams: { ...params, selectedTab: data.loggedInUserRoute.queryParam } });
     } else {
       !data.isLoginMandatory ?
-        this.router.navigate([data.anonumousUserRoute.route],
+        this.router.navigate([ this.router?.url?.split('?')[0] === '/explore-new' ? 'explore-new': data.anonumousUserRoute.route],
           { queryParams: { ...params, selectedTab: data.anonumousUserRoute.queryParam } }) : window.location.href = data.loggedInUserRoute.route;
     }
   }
@@ -169,11 +171,16 @@ export class ContentTypeComponent implements OnInit, OnDestroy {
 
   processFormData(formData) {
     this.contentTypes = _.sortBy(formData, 'index');
+    console.log(this.contentTypes);
     const defaultTab = _.find(this.contentTypes, ['default', true]);
     this.selectedContentType = this.activatedRoute.snapshot.queryParams.selectedTab || _.get(defaultTab, 'contentType') || 'textbook';
   }
 
   getTitle(contentType) {
+    //console.log(contentType);
+    //console.log(_.get(contentType, 'title'));
+    //console.log(this.resourceService);
+    //console.log(_.get(this.resourceService, _.get(contentType, 'title')));
     return _.get(this.resourceService, _.get(contentType, 'title'));
   }
 
@@ -188,6 +195,7 @@ export class ContentTypeComponent implements OnInit, OnDestroy {
       contentType: 'global'
     };
     this.formService.getFormConfig(formServiceInputParams).subscribe((data: any) => {
+      console.log(data);
       this.processFormData(data);
       this.updateForm();
       this.setContentTypeOnUrlChange();
