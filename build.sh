@@ -92,6 +92,7 @@ if [ $buildDockerImage == true ]
 then
 cd app_dist
 # replace the client cloud services bundles with OCI specific
+mkdir -p node_modules/client-cloud-services/dist
 cp "/var/lib/jenkins/custombuild/client-cloud-services/bundle.js" node_modules/client-cloud-services/dist/
 sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
