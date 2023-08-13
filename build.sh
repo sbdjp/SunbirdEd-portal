@@ -70,8 +70,6 @@ build_server(){
     echo "copying requied files to app_dist"
     cp -R libs helpers proxy resourcebundles package.json framework.config.js sunbird-plugins routes constants controllers server.js ./../../Dockerfile app_dist
     cd app_dist
-    mkdir -p node_modules/client-cloud-services/dist
-    cp "/var/lib/jenkins/custombuild/client-cloud-services/bundle.js" node_modules/client-cloud-services/dist/
     nvm use $NODE_VERSION
     echo "starting server yarn install"
     npm ls --all
