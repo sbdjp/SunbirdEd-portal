@@ -91,8 +91,8 @@ echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] secon
 if [ $buildDockerImage == true ]
 then
 cd client/node_modules
-mkdir client-cloud-service
-cd client-cloud-service
+mkdir client-cloud-services
+cd client-cloud-services
 mkdir dist
 pwd
 cd ..
