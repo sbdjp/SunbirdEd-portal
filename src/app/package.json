@@ -74,6 +74,7 @@
     "@project-sunbird/form-service": "0.0.15",
     "@project-sunbird/logger": "^0.0.9",
     "@project-sunbird/review-comment": "0.0.8",
+    "client-cloud-services": "https://github.com/amitbansal26/client-cloud-services.git#84ed8394de9c6aad497a010e4fab1496d2b8336a",
     "async": "2.5.0",
     "axios": "^0.20.0",
     "azure-storage": "2.10.2",
