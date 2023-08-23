@@ -71,7 +71,7 @@ build_server(){
     cd app_dist
     nvm use $NODE_VERSION
     echo "starting server yarn install"
-    yarn install --no-progress --production=true
+    yarn install  --production=true
     echo "completed server yarn install"
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
@@ -95,7 +95,7 @@ cd app_dist
 #cp "../../../../../../OCI-Customiaztion/NodeJS Client Cloud Service/dist/bundle.js" node_modules/client-cloud-services/dist/
 sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
 echo "starting docker build"
-docker build --no-cache --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
+docker build --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
 echo "completed docker build"
 cd ../../..
 echo {\"image_name\" : \"${name}\", \"image_tag\" : \"${build_tag}\",\"commit_hash\" : \"${commit_hash}\", \"node_name\" : \"$node\"} > metadata.json
