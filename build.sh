@@ -7,9 +7,9 @@ set -x
 export NVM_DIR="$HOME/.nvm"
 echo "$NVM_DIR"
 source ~/.bashrc
+source $NVM_DIR/nvm.sh
+source $NVM_DIR/bash_completion.sh
 nvm ls
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 build_tag=$1
 name=player
 node=$2
