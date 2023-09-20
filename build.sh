@@ -3,9 +3,7 @@ STARTTIME=$(date +%s)
 NODE_VERSION=14.19.0
 echo "Starting portal build from build.sh"
 set -euo pipefail
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 build_tag=$1
 name=player
 node=$2
@@ -21,7 +19,7 @@ then
 fi
 
 commit_hash=$(git rev-parse --short HEAD)
-nvm install $NODE_VERSION # same is used in client and server
+#nvm install $NODE_VERSION # same is used in client and server
 
 cd src/app
 mkdir -p app_dist/ # this folder should be created prior server and client build
@@ -46,7 +44,7 @@ build_client_cdn(){
 # function to run client build
 build_client(){
     echo "Building client in background"
-    nvm use $NODE_VERSION
+    #nvm use $NODE_VERSION
     cd client
     echo "starting client yarn install"
     yarn install --no-progress --production=true 
@@ -69,7 +67,7 @@ build_server(){
     echo "copying requied files to app_dist"
     cp -R libs helpers proxy resourcebundles package.json framework.config.js sunbird-plugins routes constants controllers server.js ./../../Dockerfile app_dist
     cd app_dist
-    nvm use $NODE_VERSION
+    #nvm use $NODE_VERSION
     echo "starting server yarn install"
     yarn install --no-progress --production=true
     echo "completed server yarn install"
