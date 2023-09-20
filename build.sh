@@ -1,11 +1,11 @@
 #!/bin/bash
 STARTTIME=$(date +%s)
-NODE_VERSION=14.19.1
+NODE_VERSION=14.19.0
 echo "Starting portal build from build.sh"
-set -euo pipefail	
-set -x
-. /var/lib/jenkins/.nvm/nvm.sh
-nvm ls
+set -euo pipefail
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 build_tag=$1
 name=player
 node=$2
@@ -49,11 +49,11 @@ build_client(){
     nvm use $NODE_VERSION
     cd client
     echo "starting client yarn install"
-    yarn install --no-progress --production=true --ignore-engines
+    yarn install --no-progress --production=true 
     echo "completed client yarn install"
     if [ $buildDockerImage == true ]
     then
-    build_client_docker & # run client local build in background 
+    build_client_docker & # run client local build in background
     fi
     if [ $buildCdnAssests == true ]
     then
@@ -71,19 +71,19 @@ build_server(){
     cd app_dist
     nvm use $NODE_VERSION
     echo "starting server yarn install"
-    yarn install --no-progress --production=true --ignore-engines
+    yarn install --no-progress --production=true
     echo "completed server yarn install"
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
 
-build_client & # run client build in background 
+build_client & # run client build in background
 if [ $buildDockerImage == true ]
 then
    build_server & # run client build in background
 fi
 
 ## wait for both build to complete
-wait 
+wait
 
 BUILD_ENDTIME=$(date +%s)
 echo "Client and Server Build complete Took $[$BUILD_ENDTIME - $STARTTIME] seconds to complete."
