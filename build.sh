@@ -3,6 +3,7 @@ STARTTIME=$(date +%s)
 NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail	
+set -x
 export NVM_DIR="$HOME/.nvm"
 echo "$NVM_DIR"
 nvm ls
