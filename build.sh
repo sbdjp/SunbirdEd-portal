@@ -1,6 +1,6 @@
 #!/bin/bash -xv
 STARTTIME=$(date +%s)
-NODE_VERSION=14.19.0
+#NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail
 
@@ -10,6 +10,7 @@ node=$2
 org=$3
 buildDockerImage=$4
 buildCdnAssests=$5
+node -v
 echo "buildDockerImage: " $buildDockerImage
 echo "buildCdnAssests: " $buildCdnAssests
 if [ $buildCdnAssests == true ]
