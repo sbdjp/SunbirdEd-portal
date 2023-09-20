@@ -4,6 +4,7 @@ NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail	
 set -x
+. /var/lib/jenkins/.nvm/nvm.sh
 nvm ls
 build_tag=$1
 name=player
