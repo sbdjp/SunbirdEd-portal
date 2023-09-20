@@ -4,11 +4,6 @@ NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail	
 set -x
-export NVM_DIR="$HOME/.nvm"
-echo "$NVM_DIR"
-source ~/.bashrc
-source $NVM_DIR/nvm.sh
-source $NVM_DIR/bash_completion.sh
 nvm ls
 build_tag=$1
 name=player
