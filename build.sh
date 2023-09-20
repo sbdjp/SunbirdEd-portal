@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xv
 STARTTIME=$(date +%s)
 NODE_VERSION=14.19.0
 echo "Starting portal build from build.sh"
