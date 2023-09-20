@@ -3,7 +3,7 @@ STARTTIME=$(date +%s)
 #NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail
-export PATH = $PATH:/var/lib/jenkins/.nvm/versions/node/v14.19.1/bin
+export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v14.19.1/bin
 build_tag=$1
 name=player
 node=$2
