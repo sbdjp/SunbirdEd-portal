@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, map, takeUntil, filter } from 'rxjs/operators';
 import { LibraryFiltersLayout } from '@project-sunbird/common-consumption';
 import { UserService } from '@sunbird/core';
-import { IFacetFilterFieldTemplateConfig } from '@project-sunbird/common-form-elements';
+import { IFacetFilterFieldTemplateConfig } from '@dictrigyn/common-form-elements';
 import { CacheService } from 'ng2-cache-service';
 
 @Component({
@@ -26,6 +26,7 @@ import { CacheService } from 'ng2-cache-service';
   styleUrls: ['./global-search-filter.component.scss']
 })
 export class GlobalSearchFilterComponent implements OnInit, OnChanges, OnDestroy {
+
   @Input() facets;
   @Input() queryParamsToOmit;
   @Input() supportedFilterAttributes = ['se_boards', 'se_mediums', 'se_gradeLevels', 'se_subjects', 'primaryCategory', 'mediaType', 'additionalCategories', 'channel'];
@@ -68,23 +69,16 @@ export class GlobalSearchFilterComponent implements OnInit, OnChanges, OnDestroy
     }
     this.filterChangeEvent.next({event: this.selectedFilters[facet.name], type: facet.name});
   }
-
+  
   ngOnChanges(changes: SimpleChanges) {
     if (_.get(changes, 'facets.currentValue.length')) {
       const updatedFacets = changes['facets'].currentValue;
 
-      this.filterFormTemplateConfig = [...updatedFacets].sort((a, b) => {
-        if (a.index && b.index) {
-          return a.index.localeCompare(b.index);
-        }
-        if (a.index) {
-          return 1;
-        }
-        return -1;
-      }).map((f) => {
+      this.filterFormTemplateConfig = [...updatedFacets].map((f: any) => {
+        
         if (f.name === 'mediaType') {
           f.values = f.mimeTypeList.map((m) => ({name: m}));
-
+  
           return {
             facet: f.name,
             type: 'pills',
@@ -93,22 +87,24 @@ export class GlobalSearchFilterComponent implements OnInit, OnChanges, OnDestroy
             multiple: true
           };
         }
-
+  
         return {
           facet: f.name,
           type: 'dropdown',
-          labelText: f.name === 'se_boards' ? _.get(this.resourceService, 'frmelmnts.lbl.boardsFilter') : f.label || f.name,
+          labelText: f.label || f.name,
           placeholderText: `${this.resourceService.frmelmnts.lbl.Select} ${f.label || f.name}`,
-          multiple: true,
-          autocomplete: true
+          multiple: true
         };
+  
       });
+  
       this.resourceService.languageSelected$.pipe(takeUntil(this.unsubscribe$)).subscribe((languageData) => {
         this.filterFormTemplateConfig.forEach((facet) => {
           facet['labelText'] = this.utilService.transposeTerms(facet['labelText'], facet['labelText'], this.resourceService.selectedLang);
           facet['placeholderText'] = this.utilService.transposeTerms(facet['placeholderText'], facet['placeholderText'], this.resourceService.selectedLang);
         });
       });
+  
     }
   }
 
