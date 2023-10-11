@@ -57,13 +57,20 @@ export class ReportService  {
     const apiCalls = _.map(dataSources, (source: IDataSource) => {
       return this.fetchDataSource(_.get(source, 'path'), _.get(source, 'id'));
     });
+    console.log("downloadMultipleDataSources--> apiCalls---",apiCalls);
     return forkJoin(...apiCalls).pipe(
       mergeMap(response => {
-
+        console.log("downloadMultipleDataSources--> response---",response);
         response = response.filter(function(item) { if (item ) { return item.loaded = true; } });
+        console.log("downloadMultipleDataSources--> response1---",response);
         return this.getFileMetaData(dataSources).pipe(
           map(metadata => {
+            console.log("downloadMultipleDataSources--> metadata---",metadata);
             return _.map(response, res => {
+            console.log("downloadMultipleDataSources--> mapped response---",response);
+            console.log("downloadMultipleDataSources--> res---",res);
+            console.log("downloadMultipleDataSources--> metadata[res.id]---",metadata[res.id]);
+            console.log("downloadMultipleDataSources--> _.get(metadata[res.id], 'lastModified')---",_.get(metadata[res.id], 'lastModified'));
               res.lastModifiedOn = _.get(metadata[res.id], 'lastModified');
               return res;
             });
@@ -261,8 +268,6 @@ export class ReportService  {
 
   public getLatestLastModifiedOnDate(data: { result: any, id: string, lastModifiedOn: undefined | string }[],
     dataSourceIds?: { ids: string[] }) {
-      console.log("getLatestLastModifiedOnDate---> data--",data);
-      console.log("getLatestLastModifiedOnDate---> dataSourceIds--",dataSourceIds);
     let queryObj = data;
     if (dataSourceIds) {
       queryObj = _.filter(data, obj => _.includes(dataSourceIds.ids, obj.id));

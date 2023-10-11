@@ -141,7 +141,6 @@ export class ReportComponent implements OnInit {
    * @param reportId
    */
   private renderReport(reportId: string, hash?: string) {
-    console.log("reportId----", reportId);
     return this.fetchConfig(reportId, hash)
       .pipe(
         switchMap(report => {
@@ -167,6 +166,7 @@ export class ReportComponent implements OnInit {
             const dataSource = _.get(reportConfig, 'dataSource') || [];
             let updatedDataSource = _.isArray(dataSource) ? dataSource : [{ id: 'default', path: dataSource }];
             updatedDataSource = this.reportService.getUpdatedParameterizedPath(updatedDataSource, this.hash);
+            console.log("renderReport--> updatedDataSource---",updatedDataSource);
             const charts = _.get(reportConfig, 'charts'), tables = _.get(reportConfig, 'table'), files = _.get(reportConfig, 'files');
             return forkJoin(this.reportService.downloadMultipleDataSources(updatedDataSource), this.getLatestSummary(reportId)).pipe(
               retry(1),
