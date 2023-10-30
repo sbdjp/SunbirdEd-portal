@@ -145,9 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       document.documentElement.setAttribute('layout', 'base');
     }
-
     this.analytics.logEvent('custom_diksha_web_event', {USER_ID: `DIKSHA${Math.random()*1000}`});
-
   }
   /**
    * dispatch telemetry window unload event before browser closes
