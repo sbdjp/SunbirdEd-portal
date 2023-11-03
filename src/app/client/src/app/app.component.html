@@ -102,6 +102,7 @@
       [ngClass]="{'header-block': isFullScreenView}"></app-header>
     <app-install-app (viewInBrowser)="viewInBrowser($event)" *ngIf="showAppPopUp && userService.loggedIn">
     </app-install-app>
+    
     <!--<app-breadcrumbs *ngIf="userService.loggedIn"></app-breadcrumbs>-->
 
     <main>
