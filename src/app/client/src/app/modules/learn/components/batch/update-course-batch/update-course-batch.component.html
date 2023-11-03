@@ -109,8 +109,9 @@
                 {{resourceService?.messages?.stmsg?.m0113}}
               </div>
             </div>
-            <div class="sb-field-group">
-              <label>{{resourceService?.frmelmnts?.lbl?.enddate}}</label>
+            <div class="sb-field-group"
+              [ngClass]="batchUpdateForm.controls['endDate'].invalid && batchUpdateForm.controls['endDate'].errors.required && !batchUpdateForm.controls['endDate'].pristine ? 'error': ''">
+              <label class="required">{{resourceService?.frmelmnts?.lbl?.enddate}}</label>
               <div class="ui calendar rangeendAdd" id="rangeendAdd">
                 <mat-form-field appearance="fill" class="sb-mat__datepicker sb-mat__datepicker--nolabel">
                   <!-- <mat-label>{{resourceService?.frmelmnts?.lbl?.enddate}}</mat-label> -->
@@ -120,6 +121,10 @@
                     [disabled]="(showFormInViewMode) ? true : null"></mat-datepicker-toggle>
                   <mat-datepicker #endDatePicker></mat-datepicker>
                 </mat-form-field>
+              </div>
+              <div class="mt-0 mb-8 ui pointing red basic label below"
+                *ngIf="batchUpdateForm.controls.endDate.invalid && batchUpdateForm.controls['endDate'].errors.required && !batchUpdateForm.controls['endDate'].pristine">
+                {{resourceService?.messages?.stmsg?.m0113}}
               </div>
             </div>
             <div class="sb-field-group pl-8" *ngIf="batchUpdateForm.value.enrollmentType === 'open'"

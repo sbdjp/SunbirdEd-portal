@@ -275,7 +275,7 @@ export class UpdateCourseBatchComponent implements OnInit, OnDestroy, AfterViewI
       description: new FormControl(this.batchDetails.description),
       enrollmentType: new FormControl(this.batchDetails.enrollmentType, [Validators.required]),
       startDate: new FormControl(new Date(this.batchDetails.startDate), [Validators.required]),
-      endDate: new FormControl(endDate),
+      endDate: new FormControl(new Date(endDate), [Validators.required]),
       mentors: new FormControl(this.batchDetails.mentors || []),
       users: new FormControl(this.batchDetails.participants || []),
       enrollmentEndDate: new FormControl(enrollmentEndDate),
@@ -433,7 +433,7 @@ export class UpdateCourseBatchComponent implements OnInit, OnDestroy, AfterViewI
       description: this.batchUpdateForm.value.description,
       enrollmentType: this.batchUpdateForm.value.enrollmentType,
       startDate: startDate,
-      endDate: endDate || null,
+      endDate: endDate,
       createdFor: this.userService.userProfile.organisationIds,
       mentors: _.compact(mentors)
     };
