@@ -21,11 +21,11 @@ import { IFacetFilterFieldTemplateConfig } from '@project-sunbird/common-form-el
 import { CacheService } from 'ng2-cache-service';
 
 @Component({
-  selector: 'app-global-search-filter',
-  templateUrl: './global-search-filter.component.html',
-  styleUrls: ['./global-search-filter.component.scss']
+  selector: 'app-global-search-filter-ncert',
+  templateUrl: './global-search-filter-ncert.component.html',
+  styleUrls: ['./global-search-filter-ncert.component.scss']
 })
-export class GlobalSearchFilterComponent implements OnInit, OnChanges, OnDestroy {
+export class GlobalSearchFilterNcertComponent implements OnInit, OnChanges, OnDestroy {
   @Input() facets;
   @Input() queryParamsToOmit;
   @Input() supportedFilterAttributes = ['se_boards', 'se_mediums', 'se_gradeLevels', 'se_subjects', 'primaryCategory', 'mediaType', 'additionalCategories', 'channel'];
