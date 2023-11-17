@@ -68,6 +68,10 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   contentId: string;
   collectionId:string;
 
+  currentPage: any;
+  totalPage: any;
+  currentPageType: any
+
   /**
  * Dom element reference of contentRatingModal
  */
@@ -165,7 +169,9 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   ngOnChanges(changes) {
     this.contentRatingModal = false;
     this.showNewPlayer = false;
+
     this.cdr.detectChanges();
+
     if (this.playerConfig) {
       this.playerOverlayImage = this.overlayImagePath ? this.overlayImagePath : _.get(this.playerConfig, 'metadata.appIcon');
       this.loadPlayer();
@@ -373,6 +379,11 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   eventHandler(event) {
+
+    this.currentPage = event.edata.currentPage;
+    this.totalPage = event.edata.totalPages;
+    this.currentPageType = event.edata.type;
+
     if (event.eid === 'END') {
       const metaDataconfig = event.metaData;
       if (this.userService.loggedIn) {
@@ -408,6 +419,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   generateContentReadEvent(event: any, newPlayerEvent?) {
+
     let eventCopy = newPlayerEvent ? _.cloneDeep(event) : event;
     if (!eventCopy) {
       return;
@@ -445,6 +457,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   showRatingPopup(event) {
+  
     let contentProgress;
 
     const playerSummary: Array<any> = _.get(event, 'detail.telemetryData.edata.summary');
@@ -452,24 +465,16 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       const contentMimeType = this.playerConfig.metadata.mimeType;
       contentProgress = CsContentProgressCalculator.calculate(playerSummary, contentMimeType);
     }
+    
+    if (event.detail.telemetryData.eid === 'END' && contentProgress === 100 && this.currentPageType === "END" && this.currentPage === this.totalPage) {
 
-    console.log("test pdf inner");  // to be removed
-
-    if (event.detail.telemetryData.eid === 'END' && contentProgress === 100) {
-      console.log("test pdf inner");  // to be removed
-      setTimeout(() => {
-        this.contentRatingModal = !this.isFullScreenView;
-        this.showRatingModalAfterClose = true;
+      this.contentRatingModal = !this.isFullScreenView;
+      
+      this.showRatingModalAfterClose = true;
         if (this.modal) {
           this.modal.showContentRatingModal = true;
         }
-      }, 1300);
-
-      console.log("test pdf outside timeout");  // to be removed
-    }
-
-    console.log("test pdf afer if part");  // to be removed
-    
+    }    
 
   }
 
