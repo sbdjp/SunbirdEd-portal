@@ -453,10 +453,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       contentProgress = CsContentProgressCalculator.calculate(playerSummary, contentMimeType);
     }
 
-    console.log("test pdf inner");  // to be removed
-
     if (event.detail.telemetryData.eid === 'END' && contentProgress === 100) {
-      console.log("test pdf inner");  // to be removed
       setTimeout(() => {
         this.contentRatingModal = !this.isFullScreenView;
         this.showRatingModalAfterClose = true;
@@ -464,11 +461,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnChanges, OnDest
           this.modal.showContentRatingModal = true;
         }
       }, 1300);
-
-      console.log("test pdf outside timeout");  // to be removed
     }
-
-    console.log("test pdf afer if part");  // to be removed
     
 
   }
