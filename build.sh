@@ -63,6 +63,7 @@ build_client(){
     echo "completed client post_build"
 }
 
+
 # function to run server build
 build_server(){
     echo "Building server in background"
