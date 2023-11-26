@@ -108,6 +108,10 @@ cd app_dist
 #      /var/lib/jenkins/custom-artifacts/client-cloud-services/
 # cp /var/lib/jenkins/custom-artifacts/client-cloud-services/bundle.js node_modules/client-cloud-services/dist/
 sed -i "/version/a\  \"buildHash\": \"${commit_hash}\"," package.json
+# I know I should not do this but this will be the QUICK workaround
+mkdir node_modules/client-cloud-services/dist
+cp node_modules/client-cloud-services/bundle.js node_modules/client-cloud-services/dist/bundle.js
+# kenneth
 echo "starting docker build"
 docker build --no-cache --label commitHash=$(git rev-parse --short HEAD) -t ${org}/${name}:${build_tag} .
 echo "completed docker build"
