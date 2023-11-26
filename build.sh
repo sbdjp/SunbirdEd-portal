@@ -51,7 +51,8 @@ build_client(){
     echo "starting client yarn install"
     # yarn problem is back and dependencies are missing - temporary disable production
     # yarn install --no-progress --production=true
-    yarn install --no-progress --check-files
+    # yarn install --no-progress --check-files
+    yarn install --no-progress --force
     echo "completed client yarn install"
     if [ $buildDockerImage == true ]
     then
@@ -75,7 +76,8 @@ build_server(){
     echo "starting server yarn install"
     # yarn problem is back and dependencies are missing - temporary disable production
     # yarn install --no-progress --production=true
-    yarn install --no-progress --check-files
+    # yarn install --no-progress --check-files
+    yarn install --no-progress --force
     echo "completed server yarn install"
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
