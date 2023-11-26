@@ -1,6 +1,6 @@
 #!/bin/bash
 STARTTIME=$(date +%s)
-NODE_VERSION=14.19.0
+NODE_VERSION=14.19.1
 echo "Starting portal build from build.sh"
 set -euo pipefail	
 export NVM_DIR="$HOME/.nvm"
@@ -50,9 +50,9 @@ build_client(){
     cd client
     echo "starting client yarn install"
     # yarn problem is back and dependencies are missing - temporary disable production
-    # yarn install --no-progress --production=true
+    yarn install --no-progress --production=true --ignore-engines
     # yarn install --no-progress --check-files
-    yarn install --no-progress --force
+    # yarn install --no-progress --force
     echo "completed client yarn install"
     if [ $buildDockerImage == true ]
     then
@@ -75,9 +75,9 @@ build_server(){
     nvm use $NODE_VERSION
     echo "starting server yarn install"
     # yarn problem is back and dependencies are missing - temporary disable production
-    # yarn install --no-progress --production=true
+    yarn install --no-progress --production=true --ignore-engines
     # yarn install --no-progress --check-files
-    yarn install --no-progress --force
+    # yarn install --no-progress --force
     echo "completed server yarn install"
     node helpers/resourceBundles/build.js -task="phraseAppPull"
 }
